@@ -3,11 +3,11 @@ package utils;
 import org.springframework.util.StringUtils;
 
 
-public class BussinessMessage implements Comparable<BussinessMessage> {
+public class SiscomMessage implements Comparable<SiscomMessage> {
     private final String fieldName;
     private final String message;
 
-    public BussinessMessage(String fieldName, String message) {
+    public SiscomMessage(String fieldName, String message) {
         if (message==null) {
             throw new IllegalArgumentException("message no puede ser null");
         }
@@ -45,7 +45,7 @@ public class BussinessMessage implements Comparable<BussinessMessage> {
 
 
     @Override
-    public int compareTo(BussinessMessage o) {
+    public int compareTo(SiscomMessage o) {
         if ((getFieldName()==null) && (o.getFieldName()==null)) {
             return getMessage().compareTo(o.getMessage());
         } else if ((getFieldName()==null) && (o.getFieldName()!=null)) {

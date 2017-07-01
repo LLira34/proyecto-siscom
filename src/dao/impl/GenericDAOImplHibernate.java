@@ -1,8 +1,7 @@
 package dao.impl;
 
-
 import configuracion.HibernateUtil;
-import utils.BussinessMessage;
+import utils.SiscomMessage;
 import dao.GenericDAO;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import utils.BussinessException;
+import utils.SiscomException;
 
 /**
  * 
@@ -34,7 +33,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
 
 
     @Override
-    public T create() throws BussinessException {
+    public T create() throws SiscomException {
         try {
             return getEntityClass().newInstance();
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -47,7 +46,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
     }
 
     @Override
-    public void saveOrUpdate(T entity) throws BussinessException {
+    public void saveOrUpdate(T entity) throws SiscomException {
         Session session = sessionFactory.getCurrentSession();
         try {
             session.beginTransaction();
@@ -91,7 +90,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
     }
 
     @Override
-    public T get(ID id) throws BussinessException {
+    public T get(ID id) throws SiscomException {
         Session session = sessionFactory.getCurrentSession();
         try {
             session.beginTransaction();
@@ -138,13 +137,13 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
     }
 
     @Override
-    public void delete(ID id) throws BussinessException {
+    public void delete(ID id) throws SiscomException {
         Session session = sessionFactory.getCurrentSession();
         try {
             session.beginTransaction();
             T entity = (T) session.get(getEntityClass(), id);
             if (entity == null) {
-                throw new BussinessException(new BussinessMessage(null, "Los datos a borrar ya no existen"));
+                throw new SiscomException(new SiscomMessage(null, "Los datos a borrar ya no existen"));
             }
             session.delete(entity);
             session.getTransaction().commit();
@@ -156,7 +155,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
             } catch (Exception exc) {
                 LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
             }
-            throw new BussinessException(cve);
+            throw new SiscomException(cve);
         } catch (org.hibernate.exception.ConstraintViolationException cve) {
             try {
                 if (session.getTransaction().isActive()) {
@@ -165,8 +164,8 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
             } catch (Exception exc) {
                 LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
             }
-            throw new BussinessException(cve);
-        } catch (BussinessException ex) {
+            throw new SiscomException(cve);
+        } catch (SiscomException ex) {
             try {
                 if (session.getTransaction().isActive()) {
                     session.getTransaction().rollback();
@@ -197,12 +196,12 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
     }
 
     @Override
-    public List<T> findAll() throws BussinessException {
+    public List<T> findAll() throws SiscomException {
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         try {
 
-            Query query = session.createQuery("SELECT e FROM " + getEntityClass().getName() + " e");
+            Query query = session.createQuery("FROM " + getEntityClass().getName() + " e");
             List<T> entities = query.list();
             return entities;
         } catch (javax.validation.ConstraintViolationException cve) {
@@ -213,7 +212,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
             } catch (Exception exc) {
                 LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
             }
-            throw new BussinessException(cve);
+            throw new SiscomException(cve);
         } catch (org.hibernate.exception.ConstraintViolationException cve) {
             try {
                 if (session.getTransaction().isActive()) {
@@ -222,7 +221,7 @@ public class GenericDAOImplHibernate<T, ID extends Serializable> implements Gene
             } catch (Exception exc) {
                 LOGGER.log(Level.WARNING,"Falló al hacer un rollback", exc);
             }
-            throw new BussinessException(cve);
+            throw new SiscomException(cve);
         } catch (RuntimeException ex) {
             try {
                 if (session.getTransaction().isActive()) {

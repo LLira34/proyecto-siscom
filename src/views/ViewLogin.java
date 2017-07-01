@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package views;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import dao.impl.ParticipanteDAOImplHibernate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Participante;
+import utils.SiscomException;
 
 /**
  *
@@ -19,10 +19,6 @@ public class ViewLogin extends javax.swing.JFrame {
      */
     public ViewLogin() {
         initComponents();
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setBounds((int) ((dimension.getWidth() - this.getWidth()) / 2),
-                (int) ((dimension.getHeight() - this.getHeight()) / 2), 400, 250);
-
     }
 
     /**
@@ -34,68 +30,59 @@ public class ViewLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panelMain = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-
-        jButton1.setText("jButton1");
+        btnIngresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAlwaysOnTop(true);
-        setPreferredSize(new java.awt.Dimension(400, 300));
-        setResizable(false);
-        setSize(new java.awt.Dimension(500, 300));
+        getContentPane().setLayout(new java.awt.CardLayout());
 
-        jLabel1.setBackground(new java.awt.Color(0, 204, 204));
-        jLabel1.setFont(new java.awt.Font("Vrinda", 2, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Sistema de Entrada");
-        jLabel1.setOpaque(true);
-        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        panelMain.setBackground(new java.awt.Color(255, 255, 255));
+        panelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 204, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jPanel2.setLayout(new java.awt.GridLayout(2, 2));
+        jLabel2.setText("jLabel2");
+        panelMain.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 100, 50));
+        panelMain.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 110, -1));
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jLabel2.setText("Usuario");
-        jPanel2.add(jLabel2);
+        txtPassword.setText("jPasswordField1");
+        panelMain.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel2.add(jTextField1);
+        jLabel3.setText("jLabel2");
+        panelMain.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 100, 50));
 
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
-        jLabel3.setText("Contraseña");
-        jPanel2.add(jLabel3);
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+        panelMain.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, -1, -1));
 
-        jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPasswordField1.setText("jPasswordField1");
-        jPanel2.add(jPasswordField1);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButton2.setBackground(new java.awt.Color(204, 204, 0));
-        jButton2.setText("jButton2");
-        jPanel1.add(jButton2);
-
-        jButton3.setBackground(new java.awt.Color(204, 204, 0));
-        jButton3.setText("jButton3");
-        jPanel1.add(jButton3);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(panelMain, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        try {
+            // TODO add your handling code here:
+            ParticipanteDAOImplHibernate dao;
+            dao = new ParticipanteDAOImplHibernate();
+            
+            List<Participante> lstParticipante = dao.login(txtEmail.getText(),
+                    txtPassword.getText());
+            if (lstParticipante.size() == 0) {
+                
+            }
+            System.out.println(lstParticipante);
+        } catch (SiscomException ex) {
+            Logger.getLogger(ViewLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,15 +120,11 @@ public class ViewLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel panelMain;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

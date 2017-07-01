@@ -2,7 +2,7 @@ package dao;
 
 import java.io.Serializable;
 import java.util.List;
-import utils.BussinessException;
+import utils.SiscomException;
 
 /**
  * 
@@ -12,13 +12,13 @@ import utils.BussinessException;
  */
 public interface GenericDAO<T, ID extends Serializable> {
 
-    T create() throws BussinessException;
+    T create() throws SiscomException;
 
-    void saveOrUpdate(T entity) throws BussinessException;
+    void saveOrUpdate(T entity) throws SiscomException;
 
-    T get(ID id) throws BussinessException;
+    T get(ID id) throws SiscomException;
 
-    void delete(ID id) throws BussinessException;
+    void delete(ID id) throws SiscomException;
 
-    List<T> findAll() throws BussinessException;
+    List<T> findAll() throws SiscomException;
 }

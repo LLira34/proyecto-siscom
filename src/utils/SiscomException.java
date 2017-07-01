@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 import java.lang.reflect.Field;
@@ -14,23 +10,23 @@ import javax.validation.Path;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-public class BussinessException extends Exception {
+public class SiscomException extends Exception {
 
-    private Set<BussinessMessage> bussinessMessages = new TreeSet<>();
+    private Set<SiscomMessage> bussinessMessages = new TreeSet<>();
 
-    public BussinessException(List<BussinessMessage> bussinessMessages) {
+    public SiscomException(List<SiscomMessage> bussinessMessages) {
         this.bussinessMessages.addAll(bussinessMessages);
     }
 
-    public BussinessException(BussinessMessage bussinessMessage) {
+    public SiscomException(SiscomMessage bussinessMessage) {
         this.bussinessMessages.add(bussinessMessage);
     }
 
-    public BussinessException(Exception ex) {
-        bussinessMessages.add(new BussinessMessage(null, ex.toString()));
+    public SiscomException(Exception ex) {
+        bussinessMessages.add(new SiscomMessage(null, ex.toString()));
     }
 
-    public BussinessException(javax.validation.ConstraintViolationException cve) {
+    public SiscomException(javax.validation.ConstraintViolationException cve) {
         for (ConstraintViolation constraintViolation : cve.getConstraintViolations()) {
             String fieldName;
             String message;
@@ -38,15 +34,15 @@ public class BussinessException extends Exception {
             fieldName = getCaptions(constraintViolation.getRootBeanClass(), constraintViolation.getPropertyPath());
             message = constraintViolation.getMessage();
 
-            bussinessMessages.add(new BussinessMessage(fieldName, message));
+            bussinessMessages.add(new SiscomMessage(fieldName, message));
         }
     }
 
-    public BussinessException(org.hibernate.exception.ConstraintViolationException cve) {
-        bussinessMessages.add(new BussinessMessage(null, cve.getLocalizedMessage()));
+    public SiscomException(org.hibernate.exception.ConstraintViolationException cve) {
+        bussinessMessages.add(new SiscomMessage(null, cve.getLocalizedMessage()));
     }
 
-    public Set<BussinessMessage> getBussinessMessages() {
+    public Set<SiscomMessage> getBussinessMessages() {
         return bussinessMessages;
     }
 
