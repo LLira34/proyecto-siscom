@@ -12,18 +12,18 @@ import org.springframework.util.StringUtils;
 
 public class SiscomException extends Exception {
 
-    private Set<SiscomMessage> bussinessMessages = new TreeSet<>();
+    private Set<SiscomMessage> siscomMessages = new TreeSet<>();
 
-    public SiscomException(List<SiscomMessage> bussinessMessages) {
-        this.bussinessMessages.addAll(bussinessMessages);
+    public SiscomException(List<SiscomMessage> siscomMessages) {
+        this.siscomMessages.addAll(siscomMessages);
     }
 
     public SiscomException(SiscomMessage bussinessMessage) {
-        this.bussinessMessages.add(bussinessMessage);
+        this.siscomMessages.add(bussinessMessage);
     }
 
     public SiscomException(Exception ex) {
-        bussinessMessages.add(new SiscomMessage(null, ex.toString()));
+        siscomMessages.add(new SiscomMessage(null, ex.toString()));
     }
 
     public SiscomException(javax.validation.ConstraintViolationException cve) {
@@ -34,16 +34,16 @@ public class SiscomException extends Exception {
             fieldName = getCaptions(constraintViolation.getRootBeanClass(), constraintViolation.getPropertyPath());
             message = constraintViolation.getMessage();
 
-            bussinessMessages.add(new SiscomMessage(fieldName, message));
+            siscomMessages.add(new SiscomMessage(fieldName, message));
         }
     }
 
     public SiscomException(org.hibernate.exception.ConstraintViolationException cve) {
-        bussinessMessages.add(new SiscomMessage(null, cve.getLocalizedMessage()));
+        siscomMessages.add(new SiscomMessage(null, cve.getLocalizedMessage()));
     }
 
     public Set<SiscomMessage> getBussinessMessages() {
-        return bussinessMessages;
+        return siscomMessages;
     }
 
     private String getCaptions(Class clazz, Path path) {
