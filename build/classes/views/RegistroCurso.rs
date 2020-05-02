@@ -1,0 +1,6 @@
+viewRegistrarCurso1.RegistroCurso$4
+viewRegistrarCurso1.RegistroCurso$5
+viewRegistrarCurso1.RegistroCurso$2
+viewRegistrarCurso1.RegistroCurso$3
+viewRegistrarCurso1.RegistroCurso$1
+viewRegistrarCurso1.RegistroCurso

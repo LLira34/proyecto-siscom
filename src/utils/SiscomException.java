@@ -1,4 +1,4 @@
-package utils;
+    package utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,7 +10,7 @@ import javax.validation.Path;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-public class SiscomException extends Exception {
+    public class SiscomException extends Exception {
 
     private Set<SiscomMessage> siscomMessages = new TreeSet<>();
 

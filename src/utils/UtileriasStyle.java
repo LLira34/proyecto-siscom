@@ -77,12 +77,18 @@ public class UtileriasStyle {
     }
 
     public static void setStyle(JLabel text) {
-        text.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
-        text.setForeground(new java.awt.Color(207, 207, 207));
+        
+        text.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        text.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 153, 255), 2, true));
+        text.setForeground(new java.awt.Color(255, 255, 255));
+        text.setBackground(new java.awt.Color(255, 153, 0));
+        text.setOpaque(true);
+
+
     }
 
     public static void setStyle(JButton boton) {
-        boton.setBackground(new java.awt.Color(51, 51, 51));
+        boton.setBackground(new java.awt.Color(204, 102, 0));
         boton.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         boton.setForeground(new java.awt.Color(255, 255, 255));
         boton.setOpaque(false);
